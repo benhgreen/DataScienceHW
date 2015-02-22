@@ -1,1 +1,16 @@
-Q1. 
+Temp file while LaTeX stuff downloads
+
+Q1a. producer - Nominal
+	 release_to_review_time - interval
+	 used_real_name - binary
+	 verified_purchase - binary
+	 rating - ordinal
+	 helpfulness - ordinal
+	 number_of_votes - ratio
+	 length_of_review_text - ratio
+
+Q1b. Mode is Apple
+
+Q1c. 5077/9585, or 53%
+
+Q1d. 5077/13989, or 36%
