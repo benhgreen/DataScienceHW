@@ -2,7 +2,7 @@
 % also my first real foray into LaTeX ._.
 
 \documentclass{article} 
-\usepackage{fancyhdr, titling, graphicx}
+\usepackage{fancyhdr, titling, graphicx, mathtools}
 \pagestyle{fancy}
 
 % put name and page number in header
@@ -43,7 +43,7 @@ Feature Name                                    & Feature Type                  
 \multicolumn{1}{|l|}{\texttt{used\_real\_name}}          & \multicolumn{1}{l|}{binary}   \\ \hline
 \multicolumn{1}{|l|}{\texttt{verified\_purchase}}        & \multicolumn{1}{l|}{binary}   \\ \hline
 \multicolumn{1}{|l|}{\texttt{rating}}                    & \multicolumn{1}{l|}{{ordinal}}  \\ \hline
-\multicolumn{1}{|l|}{\texttt{helpfulness}}               & \multicolumn{1}{l|}{ordinal}  \\ \hline
+\multicolumn{1}{|l|}{\texttt{helpfulness}}               & \multicolumn{1}{l|}{ratio}  \\ \hline
 \multicolumn{1}{|l|}{\texttt{number\_of\_votes}}         & \multicolumn{1}{l|}{ratio}    \\ \hline
 \multicolumn{1}{|l|}{\texttt{length\_of\_review\_text}}  & \multicolumn{1}{l|}{ratio}    \\ \hline
 \end{tabular}
@@ -68,6 +68,7 @@ The mode of \texttt{producer} is Apple, with 4480 entries.
 min              & -537           \\ \hline
 q1               & 74             \\ \hline
 median           & 144            \\ \hline
+q3				 & 290			  \\ \hline
 max              & 11686          \\ \hline
 interquartile    & 215            \\ \hline
 \end{tabular}
@@ -81,7 +82,7 @@ These numbers can be displayed conveniently in a boxplot.
 \end{center}
 
 \subsection{1g.}
-Yes, the distribution of \texttt{length\_of\_review\_text}  is heavily skewed towards the shorter end. There are outliers of 26332, 1, and 1?
+Yes, the distribution of \texttt{length\_of\_review\_text}  is heavily skewed towards the shorter end. There are outliers of 18275, 22492, and 26332.
 
 \subsection{1h.}
 The Pearson correlation value between \texttt{length\_of\_review\_text} and \texttt{helpfulness} is approximately .25. This indicates that there is a slight positive correlation between these two variables.
@@ -89,10 +90,54 @@ The Pearson correlation value between \texttt{length\_of\_review\_text} and \tex
 \subsection{1i.}
 \begin{center}
 \includegraphics[keepaspectratio, scale=0.5]{scatter.jpg}
+\end{center}
 
 \section{Question 2}
+% For the AND construction, r=3 is the number of hash functions and the LSH family \{d1,d2,0.6,0.4\}, the new family that is derived from it becomes \{d1,d2,0.6^3,0.4^3\}
+
+w=.216
+x=.064
+
+% For the OR construction, r=3 is the number of hash functions and the LSH family \{d1,d2,.216,0.64\}, the new family that is derived from it becomes \{d1,d2,1-(1-(0.6))^3,1-(1-(0.4))^3\}
+
+w=.216
+x=.064
+
+\section{Question 3}
+
+\subsection{3a.}
+Sketch of vector \emph{u} = [1.25, -1.75, 1.75]\\
+Sketch of vector \emph{v} = [0.95, -0.95, 1.35]\\
+Sketch of vector \emph{w} = [-0.35, 1.65, 1.85]\\
+\\The sketches were constructed by taking the dot products of each vector with each randomly generated vector.
+
+\subsection{3b.}
+\begin{equation}
+\arccos \frac{u \cdot v}{\|u\| \cdot \|v\|} = 0.318
+\end{equation}
+\vspace{3mm}
+\begin{equation}
+\arccos \frac{u \cdot w}{\|u\| \cdot \|w\|} = ?
+\end{equation}
+
+\section{Question 4}
+
+\subsection{4a.}
+The Mahalanobis distance reduces to the Euclidian distance when the covariance matrix is the identity matrix.
+
+\subsection{4b.}
+The Mahalanobis distance reduces to the Euclidian distance when the covariance matrix is a diagonal matrix.
+
+\section{Question 5}
+
+\subsection{5a.}
 
 
-\end{center}
+\subsection{5b.}
+
+\subsection{5c.}
+
+
+
 
 \end{document}
