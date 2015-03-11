@@ -1,0 +1,98 @@
+% HW1 for Intro to Data Science
+% also my first real foray into LaTeX ._.
+
+\documentclass{article} 
+\usepackage{fancyhdr, titling, graphicx, mathtools, fixltx2e, tikz}
+\pagestyle{fancy}
+\usetikzlibrary{positioning}
+\newdimen\nodeDist
+\nodeDist=35mm
+
+% put name and page number in header
+\fancyhead[L]{Green, Ben}
+\fancyhead[R]{Page \thepage}
+
+\author{Ben Green}
+\title{Intro to Data Science HW 2}
+
+\begin{document}
+
+% title page
+\begin{titlepage}
+	\begin{center}
+	\textsc{\LARGE Intro to Data Science HW 2}\\
+	\vspace{3mm}
+	
+	{\large \theauthor}\\
+	
+	\tableofcontents
+	\setcounter{secnumdepth}{0}
+	\vfill
+	
+	{\large \today}
+	\end{center}
+
+\end{titlepage}
+
+\section{Question 1}
+
+\subsection{1a.}
+
+\begin{equation}
+n - m (1 - (\frac{m-1}{m})^n)
+\end{equation}
+
+\subsection{1b.}
+
+\begin{equation}
+1-(answer to 1a.)
+\end{equation}
+
+\section{Question 2}
+
+\section{Question 5}
+
+\begin{center}
+\begin{tikzpicture}[
+    node/.style={%
+      draw,
+      rectangle,
+    },
+  ]
+
+    \node [node] (A) {A};
+    \path (A) ++(-135:\nodeDist) node [node] (B) {yes};
+    \path (A) ++(-45:\nodeDist) node [node] (C) {B};
+    \path (C) ++(-135:\nodeDist) node [node] (D) {C};
+    \path (C) ++(-45:\nodeDist) node [node] (E) {no};
+    \path (D) ++(-135:\nodeDist) node [node] (F) {yes};
+    \path (D) ++(-45:\nodeDist) node [node] (G) {no};
+
+    \draw (A) -- (B) node [left,pos=0.25] {true}(A);
+    \draw (A) -- (C) node [right,pos=0.25] {false}(A);
+    \draw (C) -- (D) node [left,pos=0.25] {true}(A);
+    \draw (C) -- (E) node [right,pos=0.25] {false}(A);
+    \draw (D) -- (F) node [left,pos=0.25] {true}(A);
+    \draw (D) -- (G) node [right,pos=0.25] {false}(A);
+\end{tikzpicture}
+\end{center}
+
+\section{Question 7}
+
+Assuming that you've picked door number 1, there are three (equally likely) possible scenarios:
+
+\begin{enumerate}
+\item You pick the door with the prize, and the other two doors are empty.
+\item Both your door and door number 2 are empty.
+\item Both your door and door number 3 are empty.
+\end{enumerate}
+
+Overall, there are two groups of possibilities - that you've picked a winning door (1/3) or you've picked an empty door (2/3).\\
+
+If an empty door is revealed, it must either be door 2 or 3, because you picked door number 1. Now you are presented with the same two groups - but the second group's doors now have probabilities 0 and 2/3 of containing the prize, when originally they were 1/3 each.\\
+
+Since your door (door number 1) has a probability of 1/3 and the other closed door has a probability of 2/3, you should switch doors.
+
+
+
+\end{document}
