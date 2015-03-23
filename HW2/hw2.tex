@@ -38,17 +38,62 @@
 
 \subsection{1a.}
 
+The probability of a bit in the array remaining 0 is:
+
 \begin{equation}
-n - m (1 - (\frac{m-1}{m})^n)
+e^\frac{-20}{99}
 \end{equation}
+
+\noindent which comes out to .819. So, 1-.819 = .181 is the expected fraction of 1's.
 
 \subsection{1b.}
 
-\begin{equation}
-1-(answer to 1a.)
-\end{equation}
+The expected fraction of 0's is 1-.181 = .819
 
 \section{Question 2}
+
+The false positive rate is:
+
+\begin{equation}
+(1-e^{\frac{-3*2}{11}}) = (1-e^\frac{6}{11})
+\end{equation}
+
+\section{Question 3}
+
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{a} & \textbf{b} & \textbf{c} & \textbf{a} & \textbf{d} & \textbf{e} & \textbf{a} & \textbf{c} & \textbf{b} & \textbf{b} \\ \hline
+1          &            &            &            &            &            &            &            &            &            \\ \hline
+.9         & 1          &            &            &            &            &            &            &            &            \\ \hline
+.81        & .9         & 1          &            &            &            &            &            &            &            \\ \hline
+           & .81        & .9         & 1.81       &            &            &            &            &            &            \\ \hline
+           & .729       & .81        & 1.1629     & 1          &            &            &            &            &            \\ \hline
+           & .6561      & .729       & 1.4661     & .9         & 1          &            &            &            &            \\ \hline
+           & .5905      & .6561      &            & .81        & .9         & 2.4661     &            &            &            \\ \hline
+           & .5314      &            &            & .729       & .81        & 2.219      & 1.6561     &            &            \\ \hline
+           &            &            &            & .6561      & .729       & 1.997      & 1.4904     & 1.5314     &            \\ \hline
+           &            &            &            & .5905      & .6561      & 1.797      & 1.3413     &            & 2.5314     \\ \hline
+\end{tabular}
+\end{table}
+\end{center}
+
+\section{Question 4}
+
+(3x +7) mod 11\\
+X=1 10 mod 11 = 10 1010\\
+x=2 13 mod 11 = 2 0010\\
+X=3 16 mod 11 = 5 0101\\
+X=4 19 mod 11 = 8 1000\\
+X=5 22 mod 11 = 0 0000\\
+X=6 25 mod 11 = 3 0011\\
+X=7 28 mod 11 = 6 0110\\
+X=8 31 mod 11 = 9 1001\\
+X=9 34 mod 11 = 1 0001\\
+X=10 37 mod 11 = 4 0100\\
+
+\noindent Set {10 9 1 7 10} would have to be in the set since the estimate of the number of distinct elements is 2\textasciicircum r where r is the max tail length in the set.
 
 \section{Question 5}
 
@@ -77,6 +122,12 @@ n - m (1 - (\frac{m-1}{m})^n)
 \end{tikzpicture}
 \end{center}
 
+\section{Question 6}
+
+\subsection{6a.}
+\begin{equation}
+
+\end{equation}
 \section{Question 7}
 
 Assuming that you've picked door number 1, there are three (equally likely) possible scenarios:
