@@ -55,7 +55,7 @@ The expected fraction of 0's is 1-.181 = .819
 The false positive rate is:
 
 \begin{equation}
-(1-e^{\frac{-3*2}{11}}) = (1-e^\frac{6}{11})
+(1-e^{\frac{-3*2}{11}}) = (1-e^\frac{-6}{11})
 \end{equation}
 
 \section{Question 3}
@@ -82,18 +82,18 @@ The false positive rate is:
 \section{Question 4}
 
 (3x +7) mod 11\\
-X=1 10 mod 11 = 10 1010\\
-x=2 13 mod 11 = 2 0010\\
-X=3 16 mod 11 = 5 0101\\
-X=4 19 mod 11 = 8 1000\\
-X=5 22 mod 11 = 0 0000\\
-X=6 25 mod 11 = 3 0011\\
-X=7 28 mod 11 = 6 0110\\
-X=8 31 mod 11 = 9 1001\\
-X=9 34 mod 11 = 1 0001\\
-X=10 37 mod 11 = 4 0100\\
+X=1, 10 mod 11 = 10, 1010\\
+x=2, 13 mod 11 = 2, 0010\\
+X=3, 16 mod 11 = 5, 0101\\
+X=4, 19 mod 11 = 8, 1000\\
+X=5, 22 mod 11 = 0, 0000\\
+X=6, 25 mod 11 = 3, 0011\\
+X=7, 28 mod 11 = 6, 0110\\
+X=8, 31 mod 11 = 9, 1001\\
+X=9, 34 mod 11 = 1, 0001\\
+X=10, 37 mod 11 = 4, 0100\\
 
-\noindent Set {10 9 1 7 10} would have to be in the set since the estimate of the number of distinct elements is 2\textasciicircum r where r is the max tail length in the set.
+\noindent Set \{10 9 1 7\} would have to be in the set since the estimate of the number of distinct elements is 2\textasciicircum r where r is the max tail length in the set.
 
 \section{Question 5}
 
@@ -126,7 +126,53 @@ X=10 37 mod 11 = 4 0100\\
 
 \subsection{6a.}
 \begin{equation}
+H[12+,9-] = -\frac{12}{21}log_{2}\frac{12}{21} - \frac{9}{21}log_{2}\frac{9}{21} = -.5714 * -.8074 - .4286 * -1.2223 = .9852
+\end{equation}
 
+\subsection{6b.}
+\begin{equation}
+IG(X1) = T[7+, 1-] F[5+, 8-]
+\end{equation}
+\begin{equation}
+.9582 - \frac{8}{21}*1.3925 - \frac{13}{21} * .6920 = .0265
+\end{equation}
+\begin{equation}
+IG(X2) = T[7+, 3-] F[5+, 6-]
+\end{equation}
+\begin{equation}
+.9852 - \frac{10}{21} * 1.0704 - \frac{11}{21} * 9329 = .013
+\end{equation}
+
+\subsection{6c.}
+
+\begin{center}
+\begin{tikzpicture}[
+    node/.style={%
+      draw,
+      rectangle,
+    },
+  ]
+
+    \node [node] (A) {X1};
+    \path (A) ++(-135:\nodeDist) node [node] (B) {0.924 [7+, 1-]};
+    \path (A) ++(-45:\nodeDist) node [node] (C) {[5+, 8-] .1756};
+    \path (C) ++(-45:\nodeDist) node [node] (E) {X2};
+    \path (E) ++(-135:\nodeDist) node [node] (F) {.4827 [4+, 3-]};
+    \path (E) ++(-45:\nodeDist) node [node] (G) {[1+, 5-] .2996};
+
+    \draw (A) -- (B) node [left,pos=0.25] {true}(A);
+    \draw (A) -- (C) node [right,pos=0.25] {false}(A);
+    \draw (C) -- (E) node [right,pos=0.25] {}(A);
+    \draw (E) -- (F) node [left,pos=0.25] {true}(A);
+    \draw (E) -- (G) node [right,pos=0.25] {false}(A);
+\end{tikzpicture}
+\end{center}
+
+
+
+\subsection{6d.}
+\begin{equation}
+\frac{4}{7} = .5714
 \end{equation}
 \section{Question 7}
 
