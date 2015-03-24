@@ -24,11 +24,6 @@
 
 function X = transform_log (X)
 
-for i = 1:size(X,1)
-  for j = 1:size(X,2)
-    X(i,j) = log(X(i,j) + 0.1);
-  end
-end
-
+X = log(X + 0.1);
 
 endfunction
