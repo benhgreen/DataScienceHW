@@ -1,0 +1,387 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{xfrac}
+
+
+\pdfinfo{
+  /Title (Data Science Cheat Sheet)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Ben Green)
+  /Subject (Example)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% Set margins
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.1in,left=.1in,right=.1in,bottom=.1in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Intro to Gitmo Science Cheat Sheet}} \\
+\end{center}
+
+\section{Data Visualization}
+\subsection{Measurements}
+\begin{itemize}
+\item{nominal/categorical - no semantic meaning, like names}
+\item{ordinal - ranked order without significance}
+\item{interval - ranked order with significance, such as temperature}
+\item{ratio - absolute zero that is meaningful, such as weight}
+\end{itemize}
+\subsection{Distances}
+\begin{itemize}
+\item{Euclidean - distance b\/w two points}
+\item{Weighted euclidean - divide both variables by standard deviation}
+\item{Covariance - measure of how x and y vary together}
+\item{Mahalanobis - used for distance b/w data rows, accounts for scaling of coordinate axes, reduces to euclidean with identity matrix}\\
+\item{Mahalanobis takes the distance between two points, P and C and normalizes them over the standard deviation of the feature}\\
+sqrt($\sum\limits_{i=1}^d (\frac{P_{i}-C_{i}}{\sigma_{i}})^2$)
+\end{itemize}
+\subsection{Transformation}
+logit - transform $p=[0,1]$ into a real line
+
+\section{Data Wrangling \& Preprocessing}
+\subsection{Tasks}
+\begin{itemize}
+\item{Cleaning, removing commas, different values for same thing, ascii vs utf-8, etc}
+\item{google refine \& data wrangler do this}
+\item{Integration with multiple data sets}
+\item{Reduction \& Compression - reduce dimensions}
+\item{Transformation via normalization - smoothing, attribute construction}
+\item{Noisy data can be handled via binning, regression, clustering, etc}
+\end{itemize}
+\subsection{Filling in Missing Data}
+\begin{itemize}
+\item{global constant}
+\item{attribute mean}
+\item{most probable value, inference based like bayesian/decision tree}
+\end{itemize}
+\subsection{Types of Sampling}
+\begin{itemize}
+\item{simple random sampling - equal probability for all items}
+\item{sampling w/o replacement - selected object removed}
+\item{sampling w/ replacement - selected object not removed}
+\item{stratified sample - partition data, draw samples from each partition proportionately}
+\end{itemize}
+
+\section{Finding Similar Items}
+\subsection{Applications}
+\begin{itemize}
+\item{Find news articles that are the same story}
+\item{Remove duplicate web pages on search results}
+\end{itemize}
+This is difficult because comparing all documents to each other is computationally infeasible (both because of processing time and storage issues)
+\subsection{Shingling}
+\begin{itemize}
+\item{Used when order of items matters as well as sets}
+\item{Size k must be picked such that probability of any shingle being in a document is low - 5 for small documents, 10 for big documents}
+\end{itemize}
+\subsection{Min-hashing}
+\begin{itemize}
+\item{motivation - make smaller signature matrix by hashing columns}
+\item{used for jaccardian  ($\frac{A \cap B}{A \cup B}$) similarity}
+\item{use independent hash functions to generate signature matrix with h rows (where h = number of hash functions) and d columns (where d = number of documents)}
+\end{itemize}
+\subsection{Locality-sensitive hashing}
+\begin{itemize}
+\item{motivation - find documents in signature matrix with jaccardian similarity about threshold S}
+\item{hash doc columns into many buckets - unique documents in the same bucket are candidate pairs and band parts in same assumed to be the same}
+\item{divide signature matrix into b bands with r rows per band}
+\item{hash each band into one of k buckets and balance M hash functions with bands and rows to balance false positives with false negative}
+\end{itemize}
+
+\section{Data Streams}
+%Working on this now - nick
+Examples of streams: sensor, image data, internet traffic\\
+Stream queries can either be standing (ex: whenever temperature exceeds 100 degrees) or retained (ex: maximum temperature ever)
+Random Sample over stream -- To take a sample of 1/n elements, a good approach is to hash user ids into one of n buckets, only keeping from one.\\
+Fixed size sampling (Resevoir Sampling) -- Store all the first s elements of the stream to S 􏰀 Suppose we have seen n-1 elements, and now the nth element arrives $n > s$.
+􏰀 With probability $\sfrac{s}{n}$, keep the nth element, else discard it \\
+􏰀 If we picked the nth element, then it replaces one of the s elements in the sample S, picked uniformly at random
+\\
+
+Flajolet-Martin - Distinct elements = 2\textsuperscript{r} r being tail 0s\\
+Bloom Filter: Probabilty of picking 1 = (1 - e\textsuperscript{-km/n})\textsuperscript{k}\\
+k = num. of h(x); m = 'darts'; n = 'buckets'
+
+\section{Decision Trees}
+$H(X) = -\sum\limits_{i=1}^n P(X=i) \log_2 P(X=i)$\\
+$IG(A,Y) = Hs(Y) - Hs(Y|A)$\\
+Avoid overfitting - Stop growing when data split is not sig OR prune full tree
+\subsection{Components}
+\begin{itemize}
+\item{Decision nodes - squares}
+\item{Chance nodes - circles}
+\item{End nodes - triangles}
+\end{itemize}
+Instances are fed to the tree with as attribute-value pairs\\
+Decision trees are robust against errors, both in classification and input values\\
+Some input values can even be missing!\\
+\subsection{Information Gain}
+\begin{itemize}
+\item{Synonym for Kullback-Leibler divergence}
+\item{Definition - IG is the reduction in entropy achieved by learning the state of a particular random variable}
+\item{This can be used to generate a preferred sequence of attributes with which we can most rapidly narrow down a state - such a sequence is known as a decision tree.}
+\end{itemize}
+
+
+
+\section{Naive Bayes}
+$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$ \\
+Prior Probability of GREEN: number of GREEN objects / total number of objects\\
+Having formulated our prior probability, we draw a circle around X which encompasses a number (to be chosen a priori) of points irrespective of their class labels. From this we estimate likelihood.\\
+
+Likelihood of X given GREEN = Number of GREEN in the vicinity of X / Total number of GREEN cases\\
+Posterior probability of X being GREEN = Prior prob * Likelihood\\
+
+\section{Logistic/Logit Regression}
+$F(x) = \dfrac{1}{1 + e^{-(\beta_{0} + \beta_{0}X)}}$
+Classification Algorithm \\
+Takes output from linear regression and makes it positive or negative\\
+Gradient Descent: Need to choose $\alpha$ \\ 
+Needs many iterations and better for large item sets ie. $n^6$\\
+Normal Equation: No need to choose $\alpha$ \\ 
+Don't need to iterate. ($On^3$). Item sets $n<10^5$\\
+
+\section{Linear Regression}
+Regression Algorithm\\
+See logistic regression.\\
+
+\section{Support Vector Machines}
+\begin{itemize}
+\item{Supervised learning model that analyzes and recognizes patterns for classification and regression purposes}
+\item{Binary linear classifier: seperates N-dimensional space with N-1 dimensional hyperplane}
+\item{Use kernel function to map non-linearly seperable data to higher dimensional space}
+\item{Hyperplane is picked to maximize margin between itself and 'support vectors'}
+\end{itemize}
+
+\section{Ensemble Methods}
+These create strong classifiers from weak classifiers.
+\subsection{Boosting}
+\begin{itemize}
+\item{Can a set of weak learners create a single strong learner?}
+\item{Reduces bias primarily, also reduces variance}
+\item{Most popular algorithm is AdaBoost, in which all different properties are weighted}
+\end{itemize}
+\subsection{Bagging/Bootstrap Aggregating}
+\begin{itemize}
+\item{Generates new training sets by sampling from training set uniformly and with replacement}
+\item{Used in classification and regression}
+\item{Reduces variance, helps avoid overfitting}
+\item{Random Forests algorithm uses Bagging to construct a collection of decision trees with controlled variance}
+\end{itemize}
+
+\section{MLE vs. MAP}
+\begin{itemize}
+\item {This is used in the Bayes Method for classification} 
+\item {MLE stands for Maximum Likelihood Estimate - it's the value of the parameter that maximizes likelihood of a certain outcome} 
+\item {This is the ${P(B \mid A)}$ part of the equation}
+\item{MAP = Maximum A Posteriori - a maximized posterior distribution based on an estimate}
+\item{Example - influencing a skewed distribution of voters to align more with what you think SHOULD be the distribution}
+\end{itemize}
+
+\section{Regularization}
+Process of introducing additional information (usually anomalies) to prevent overfitting\\
+Example: least-squares method
+\begin{itemize}
+\item{L1 - Produces sparse models, performs feature selection, not differentiable}
+\item{L2 - Also known as 'weight decay', generally performs way better than L1}
+\end{itemize}
+
+\section{Bias vs. Variance}
+\subsection{The Difference}
+\begin{itemize}
+\item{Bias - error from erroneous assumptions in the learning algorithm}
+\begin{itemize}
+\item{High bias causes an algorithm to miss relevant relations (underfitting)}
+\end{itemize}
+\item{Variance - error from fluctuations/anomalies in the training set}
+\begin{itemize}
+\item{High variance causes noise to have too much of an input (overfitting)}
+\end{itemize}
+\end{itemize}
+\subsection{The Problem}
+In a perfect world, models would capture regularities accurately and generalize well to unseen data. In reality, accomplishing both is almost impossible.
+\subsection{Possible Solutions}
+\begin{itemize}
+\item{Generalized linear models can be regularized to increase their bias.}
+\item{In k-nearest neighbor models, a high value of k leads to high bias and low variance.}
+\item{In Instance-based learning, regularization can be achieved by varying the mixture of prototypes and exemplars.}
+\item{In decision trees, the depth of the tree determines the variance - decision trees can therefore be pruned to control variance.}
+\item{Mixture models and ensemble learning are also methods which help to control the bias/variance disparity.}
+\end{itemize}
+
+\section{Evaluation Techniques for Supervised Learning}
+Supervised learning = data is labeled\\
+Keep in mind -- performance of a model may be based on other factors such as Class Distribution, Cost of Miscalculation, Size of Teaching and Test Sets
+\subsection{Confusion Matrix}
+For [TN,FP,FN,TP]  =  [a,b,c,d]:
+\begin{itemize}
+\item{accuracy = $\frac{a+d}{a+b+c+d}$}
+\item{recall/true positive = $\frac{d}{c+d}$}
+\item{false positive = $\frac{b}{a+b}$}
+\item{precision = $\frac{d}{b+d}$}
+\item{F1 score = $2\cdot \frac{precision \cdot recall}{precision+recall}$}
+\end{itemize}
+
+As a metric, accuracy has some problems.  For instance the `spam filter' which filters no emails but has an accuracy of 0.99 because only 1\% of emails are spam.
+
+One way to improve upon this would be to use a cost matrix $[C(Y|Y), C(N|Y), C(Y|N), C(N|N)]$ and a cost function $cost = \dfrac{aC(Y|Y) + dC(N|N)}{aC(Y|Y)+bC(N|Y)+cC(Y|N)+dC(N|N)}$ where C(i,j) is the cost of classifing j as i --- cost is proportional to acc if $C(Y|N)=C(N|Y)\wedge C(Y|Y)=C(N|N)$
+
+
+\section{k-means Clustering}
+centroid: mean of points in a cluster\\
+\begin{itemize}
+\item{Pick k using elbow method}
+\item{Initialize k centroids}
+\item{Cluster instances to centroid by finding lowest distance to a centroid}
+\item{Recompute centroids}
+\item{Repeat 3 and 4 until centroids stabilize or some max iteration reached}
+\end{itemize}
+
+
+
+\section{Hierarchical Clustering}
+unsupervised. Distance based clustering. Does not create a specific number of clusters. Number of clusters depends on where you "cut".
+\subsection{Types}
+\begin{itemize}
+\item{Agglomerative: preferred. bottom up. Each observation starts as an individual cluster, and pairs of clusters are merged, based on distances/similarity measures, as one moves up the hierarchy until one (or k) clusters left}
+\subsubsection{Algorithm}
+\begin{itemize}
+\item{each point is a cluster; compute proximity matrix}
+\item{merge closest clusters}
+\item{recompute proximity matrix}
+\end{itemize}
+\item{Divisive: top-down. All points are in one large cluster. break into smaller clusters till each point is its own cluster}
+\item{uses a minimum spanning tree to construct heirachy of clusters. repeat till singleton clusters}
+\end{itemize}
+space complexity is $n^2$ to store proximity matrix\\
+time complexity is $n^3$ usually, $n^2$ at best. poor for large data sets\\
+
+
+
+\section{Spectral Clustering}
+connectivity over compactness\\
+\subsection{Algorithm}
+\begin{itemize}
+\item{given: (n x n) Similarity Matrix W and k}
+\item{Build the similarity graph: K-Nearest Neighbor graph}
+\item{Make a Degree matrix D: \# outgoing edges for each node}
+\item{Make an Affinity matrix A: weighted adjacency matrix}
+\item{Laplacian Matrix L:}
+\begin{itemize}
+\item{unnormalized Laplacian: L = D - A}
+\item{normalized Laplacian: $L = D^{-1/2}AD^{-1/2}$}
+\end{itemize}
+\item{find the first k eigenvectors of L}
+\item{combine k eigenvectors into a matrix V}
+\item{do k-means on V to create clusters}
+\end{itemize}
+\subsection{Advantages}
+\begin{itemize}
+\item{superior: looks for connections between data}
+\item{useful in hard non-convex clustering}
+\item{data represented in low-dimensional space is easier to cluster}
+\end{itemize}
+\subsection{Similarity function and choosing K}
+\begin{itemize}
+\item{similarity function for matrix: kernel function}
+\item{Gaussian similarity function: $w_{i,j} = e^\frac{||x_{i} - x_{j}||^{2}}{2\sigma ^{2}}$}
+\item{choose k that maximizes the distance between consecutive eigenvalues}
+\end{itemize}
+
+\section{Evaluation Techniques for Unsupervised Learning}
+Unsupervised learning = data is not tagged - algorithm clusters data into different groups\\
+\begin{itemize}
+\item{purity of a cluster: $\frac{|largest cluster|}{\# clusters}$}
+\item{External: matching clusters to externally provided labels. Make confusion matrix}
+\item{Internal}
+\begin{itemize}
+\item{correlation: measure pearson correlation of proximity matrix and incidence matrix. higher correlation, better clustering}
+\item{sum of squared error for all clusters in clustering, smaller SSE, better clustering}
+\item{silhouette coefficient: ratio of average distance to elements in the same cluster (a) with average distance to elements in other clusters(b). $s = 1-\frac{a}{b}$ if s closer to 1, better clustering. $a \geq b$ is rare, means bad clustering, noisy data and outliers}
+\end{itemize}
+\item{Relative: comparing the results of different clustering heuristics}
+\end{itemize}
+
+
+
+
+\section{Dimensionality Reduction}
+\subsection{Goal}
+Reduce number of dimensions in matrix via compression\\
+Example: many pictures of a face from different angles can be used to reconstruct a model of the original face\\
+\begin{itemize}
+\item{Discover hidden correlations}
+\item{Remove redundant/noisy features}
+\item{Easier storage/visualization/processing of data}
+\end{itemize}
+Rank of a matrix indicates its dimension - the theory of eigenvectors provides the basis for dimensionality reduction.\\
+
+
+% % You can even have references
+% \rule{0.3\linewidth}{0.25pt}
+% \scriptsize
+% \bibliographystyle{abstract}
+% \bibliography{refFile}
+\end{multicols}
+\end{document}
+
